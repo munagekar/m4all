@@ -1,0 +1,17 @@
+#:kivy 1.10.0
+
+<MainDisplay>:
+    Label:
+        font_size: 70
+        size: self.texture_size
+        text:'M4All'
+        halign: 'center'
+        valign: 'middle'
+        center_x: root.width/2
+        center_y: root.height/2
+        canvas:
+        	Color:
+        		rgba: 0,1,0,0.5
+        	Rectangle:
+        		pos:self.pos
+        		size:self.size
