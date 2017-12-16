@@ -1,28 +1,45 @@
 #:kivy 1.10.0
 
+<GridItem>:
+    size_hint_x:1
+    AsyncImage:  
+        size:self.parent.size
+        pos:self.parent.pos[0],self.parent.pos[1]
+        source:'img.png'
+        auto_bring_to_front:False
+        allow_stretch:True
+        keep_ratio:False
+    Button:
+        size_hint_y:1
+        size_hint_x:1
+        pos:self.parent.pos
+        text_size: self.size
+        text: self.parent.displaytext
+        valign: 'bottom'
+        halign: 'center'
+        background_color: 0, 0, 0, 0.2
+        markup:True
+
 <RV>:
-    viewclass: 'Label'
-    RecycleBoxLayout:
+    size_hint_x:1
+    viewclass: 'GridItem'
+    RecycleGridLayout:
+        default_size: dp(200), dp(200)
+        default_size_hint: 1, None
         size_hint_y: None
         height: self.minimum_height
+
+        size_hint_x:1
         orientation: 'vertical'
+        cols: int(root.width/dp(200))
+        
+        
+        
         
         
 
 
 <MainDisplay>:
-    canvas:
-        Color:
-            rgba: 0,1,0,0.5
-        Rectangle:
-            pos:self.pos
-            size:self.size
     RV:
-        size: root.size
-        pos: root.pos
-        canvas:
-            Color:
-                rgba: 1,0,0,0.5
-            Rectangle:
-                pos:self.pos
-                size:self.size
+        size: self.parent.size
+        pos: self.parent.pos
