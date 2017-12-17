@@ -38,7 +38,7 @@ def topTrackParser(req,result):
 		#print(trackartist)
 		trackurl = jsontrack['url']
 		#print(trackurl)
-		trackart = jsontrack['image'][3]['#text']
+		trackart = jsontrack['image'][3]['#text'].replace("https:","http:")
 		#print(trackart)
 		tracks.append(Track(trackname,trackartist,trackart,trackurl))
 	topTrackCallback(tracks)
