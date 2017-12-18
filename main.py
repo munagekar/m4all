@@ -12,6 +12,7 @@ import time
 
 cache_folder= None
 info_file = None
+image_cache = None
 
 class RV(RecycleView):
     def __init__(self, **kwargs):
@@ -21,6 +22,7 @@ class RV(RecycleView):
 
     def getTracks(self):       #See if data exists and use if possible 
         global info_file
+        global image_cache
         store = DictStore(info_file)
         print (info_file)
         lastupdated =0     #Time stamp when last updated assumed 1980
@@ -29,32 +31,30 @@ class RV(RecycleView):
         needs_update =True      #Flag: Does the data need to be updated
         
         if 'toptracks' in store:
-            print('The store exists')
             lastupdated = store['toptracks']['lastupdated']
             tracks = store['toptracks']['toptracks']
             self.datafiller(tracks)
             if time.time() - lastupdated < 36000:
                 needs_update = False
-        else:
-            print('couldnt find the store')
+            lfm.imageCachePopulator(tracks,image_cache)
         
         if needs_update == True:
-            print ('I needed an update')
             lfm.getTopTracks(self.updateTracks,50)
+
             
 
     def updateTracks(self,tracks):
         global info_file
+        global image_cache
         store = DictStore(info_file)
         store['toptracks']={'toptracks':tracks,'lastupdated':time.time()}
         self.datafiller(tracks)
 
 
+
     def datafiller(self,tracks):
         self.data =[{'displaytext':"[b]"+tracks[i].name+"\n-"+tracks[i].artist+"[/b]",'imagelink':tracks[i].coverartlink} for i in range(len(tracks))]
-        for i in range(len(tracks)):
-            print (tracks[i].coverartlink)
-
+        print (tracks[1].coverartlink)
 class GridItem(FloatLayout):
     displaytext =StringProperty()
     imagelink = StringProperty()
@@ -84,7 +84,6 @@ class M4AllApp(App):
             os.makedirs(cache_folder)
         if not os.path.exists(image_cache):
             os.makedirs(image_cache)
-
 
 
 if __name__ == '__main__':

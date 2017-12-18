@@ -1,4 +1,7 @@
 from kivy.network.urlrequest import UrlRequest
+import os
+import _thread
+#import netutils
 
 API_key = ""
 topTrackCallback = None
@@ -38,9 +41,41 @@ def topTrackParser(req,result):
 		#print(trackartist)
 		trackurl = jsontrack['url']
 		#print(trackurl)
-		trackart = jsontrack['image'][3]['#text'].replace("https:","http:")
-		#print(trackart)
+		trackart = str(jsontrack['image'][3]['#text']).replace("https:","http:")
 		tracks.append(Track(trackname,trackartist,trackart,trackurl))
 	topTrackCallback(tracks)
+
+
+
+
+
+def imageCachePopulator(tracks,image_cache):
+	for i in range(len(tracks)):
+		artist = tracks[i].artist
+		artist_folder = os.path.join(image_cache,artist)
+		if not os.path.exists(artist_folder):
+			os.makedirs(artist_folder)
+		linklocation = tracks[i].coverartlink
+		print (linklocation)
+		stripedname = linklocation[linklocation.rindex('/')+1:]
+		filepath = os.path.join(artist_folder,stripedname)
+		if not os.path.exists(filepath):
+			_thread.start_new_thread(filesaver,(linklocation,filepath))
+
+def filesaver(linklocation,filepath):
+
+	req =UrlRequest(linklocation)
+	req.wait()
+	with open(filepath,'wb') as f:
+		f.write(req.result)
+
+		#netutils.getfiles(downdetails)
+
+
+
+
+
+
+
 
 
