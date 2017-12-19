@@ -19,7 +19,6 @@ class Track:
 		self.url=url
 
 def getTopTracks(callback,n):
-	print 'Url UrlRequest was made'
 	global topTrackCallback
 	global nos_track
 	nos_track = n
@@ -28,7 +27,6 @@ def getTopTracks(callback,n):
 	result = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key='+API_key+'&format=json&limit='+str(n), on_success=topTrackParser)
 
 def topTrackParser(req,result):
-	print 'topTrackParser was called'
 	global topTrackCallback
 	global nos_track
 	jsonresult = result

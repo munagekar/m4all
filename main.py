@@ -24,7 +24,6 @@ class RV(RecycleView):
         global info_file
         global image_cache
         store = DictStore(info_file)
-        print (info_file)
         lastupdated =0     #Time stamp when last updated assumed 1980
         
         
@@ -46,7 +45,6 @@ class RV(RecycleView):
     def updateTracks(self,tracks):
         global info_file
         global image_cache
-        print image_cache
         store = DictStore(info_file)
         store['toptracks']={'toptracks':tracks,'lastupdated':time.time()}
         self.datafiller(tracks)
@@ -55,16 +53,13 @@ class RV(RecycleView):
 
 
     def datafiller(self,tracks):
-    	global image_cache
-    	lfm.cacheLocationFixer(tracks,image_cache)
+        global image_cache
+        lfm.cacheLocationFixer(tracks,image_cache)
         self.data =[{'displaytext':"[b]"+tracks[i].name+"\n-"+tracks[i].artist+"[/b]",'imagelink':tracks[i].coverartlink} for i in range(len(tracks))]
-        print (tracks[1].coverartlink)
+
 class GridItem(FloatLayout):
     displaytext =StringProperty()
     imagelink = StringProperty()
-    #aimg = AsyncImage(source=imagelink)
-    pass
-        
 
 class MainDisplay(Widget):
     pass
@@ -73,7 +68,6 @@ class M4AllApp(App):
     def build(self):
         self.initilize_global_vars()
         mainDisplay = MainDisplay()
-        print 'maindisplay build successful'
         return mainDisplay
 
     def initilize_global_vars(self):
@@ -92,8 +86,5 @@ class M4AllApp(App):
 
 
 if __name__ == '__main__':
-    time.time()
-    print time.time()
-    #lfm.getTopTracks()
     M4AllApp().run()
     
