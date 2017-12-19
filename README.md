@@ -20,8 +20,11 @@ Features
 --------
 Developed
  1. See the top tracks in the world
+ 2. Caching support for Images
+ 
 Under Development
- 1. Caching support for Images
+ 1. Song information Screen Under Development. Might take a while for a new android build to come up
 
-A special thanks to last.fm as we are powered by their api 
+
+A special thanks to last.fm, proudly powered by last.fm
 
