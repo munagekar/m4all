@@ -1,9 +1,8 @@
 from kivy.network.urlrequest import UrlRequest
 import os
-import thread
-#import netutils
+from threading import Thread
 
-API_key = "
+API_key = ''
 topTrackCallback = None
 nos_track = 0
 
@@ -62,7 +61,7 @@ def imageCachePopulator(tracks,image_cache):
 		stripedname = linklocation[linklocation.rindex('/')+1:]
 		filepath = os.path.join(artist_folder,stripedname)
 		if not os.path.exists(filepath):
-			thread.start_new_thread(filesaver,(linklocation,filepath))
+			Thread(target=filesaver,args=(linklocation,filepath)).start()
 
 def cacheLocationFixer(tracks,image_cache):
 	for i in range(len(tracks)):
