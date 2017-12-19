@@ -11,9 +11,10 @@ M4All is built using Kivy, a cross platform python GUI framework. Thus it can be
 
 Installation Instructions
 -------------------------
-Android: Grab the Apk from Github. Install and you are ready to go
-Linux: You need to get Kivy with all dependencies and run it.
-Windows: Need to get Kivy and all dependencies and run it.
+
+ - Android: Grab the Apk from Github. Install and you are ready to go
+ - Linux: You need to get Kivy with all dependencies and run it
+ - Windows: Need to get Kivy and all dependencies and run it.
 
 Features
 --------
