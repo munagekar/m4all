@@ -6,6 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.properties import StringProperty
 from kivy.storage.dictstore import DictStore
+from kivy.uix.screenmanager import ScreenManager, Screen
 import lfm
 import os
 import time
@@ -61,14 +62,15 @@ class GridItem(FloatLayout):
     displaytext =StringProperty()
     imagelink = StringProperty()
 
-class MainDisplay(Widget):
+class TopTrack(Screen):
     pass
 
 class M4AllApp(App):
     def build(self):
         self.initilize_global_vars()
-        mainDisplay = MainDisplay()
-        return mainDisplay
+        sm = ScreenManager()
+        sm.add_widget(TopTrack(name='toptracks'))
+        return sm
 
     def initilize_global_vars(self):
         global root_folder
