@@ -1,14 +1,26 @@
-# m4all
-Kivy Based GUI app for Music. Got tons of ideas let see how it goes. Will take a lot of time before anything comes up. Kinda like a big huge side project. Current Focus is on Music Discovery. Currently supported Platforms: Linux, Android
+M4All
+=====
+
+Introduction
+------------
+It is GUI app for Music. I have number of ideas which are being incorporated. Current focus is on Music Discovery. This is a huge side project and is being rapidly developed.
+
+Supported Platforms
+-------------------
+M4All is built using Kivy, a cross platform python GUI framework. Thus it can be easily work on Windows, Linux and Android.
 
 Installation Instructions
-Linux: Figure Out yourself(I trust Linux geeks)
-Android: Download apk hopefully uploaded on github.
+-------------------------
+Android: Grab the Apk from Github. Install and you are ready to go
+Linux: You need to get Kivy with all dependencies and run it.
+Windows: Need to get Kivy and all dependencies and run it.
 
-Rapidly being developed to check for updates
-
-Current Features
-1.See top music tracks in the world
-
+Features
+--------
+Developed
+ 1. See the top tracks in the world
 Under Development
-1.Caching for Images and Internet Acquired Data
+ 1. Caching support for Images
+
+A special thanks to last.fm as we are powered by their api 
+
