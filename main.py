@@ -36,23 +36,27 @@ class RV(RecycleView):
             self.datafiller(tracks)
             if time.time() - lastupdated < 36000:
                 needs_update = False
-            lfm.imageCachePopulator(tracks,image_cache)
         
         if needs_update == True:
             lfm.getTopTracks(self.updateTracks,50)
+            
 
             
 
     def updateTracks(self,tracks):
         global info_file
         global image_cache
+        print image_cache
         store = DictStore(info_file)
         store['toptracks']={'toptracks':tracks,'lastupdated':time.time()}
         self.datafiller(tracks)
+        lfm.imageCachePopulator(tracks,image_cache)
 
 
 
     def datafiller(self,tracks):
+    	global image_cache
+    	lfm.cacheLocationFixer(tracks,image_cache)
         self.data =[{'displaytext':"[b]"+tracks[i].name+"\n-"+tracks[i].artist+"[/b]",'imagelink':tracks[i].coverartlink} for i in range(len(tracks))]
         print (tracks[1].coverartlink)
 class GridItem(FloatLayout):
@@ -69,6 +73,7 @@ class M4AllApp(App):
     def build(self):
         self.initilize_global_vars()
         mainDisplay = MainDisplay()
+        print 'maindisplay build successful'
         return mainDisplay
 
     def initilize_global_vars(self):
@@ -88,6 +93,7 @@ class M4AllApp(App):
 
 if __name__ == '__main__':
     time.time()
+    print time.time()
     #lfm.getTopTracks()
     M4AllApp().run()
     

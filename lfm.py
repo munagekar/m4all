@@ -1,9 +1,9 @@
 from kivy.network.urlrequest import UrlRequest
 import os
-import _thread
+import thread
 #import netutils
 
-API_key = ""
+API_key = "
 topTrackCallback = None
 nos_track = 0
 
@@ -20,6 +20,7 @@ class Track:
 		self.url=url
 
 def getTopTracks(callback,n):
+	print 'Url UrlRequest was made'
 	global topTrackCallback
 	global nos_track
 	nos_track = n
@@ -28,6 +29,7 @@ def getTopTracks(callback,n):
 	result = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key='+API_key+'&format=json&limit='+str(n), on_success=topTrackParser)
 
 def topTrackParser(req,result):
+	print 'topTrackParser was called'
 	global topTrackCallback
 	global nos_track
 	jsonresult = result
@@ -60,7 +62,23 @@ def imageCachePopulator(tracks,image_cache):
 		stripedname = linklocation[linklocation.rindex('/')+1:]
 		filepath = os.path.join(artist_folder,stripedname)
 		if not os.path.exists(filepath):
-			_thread.start_new_thread(filesaver,(linklocation,filepath))
+			thread.start_new_thread(filesaver,(linklocation,filepath))
+
+def cacheLocationFixer(tracks,image_cache):
+	for i in range(len(tracks)):
+		artist = tracks[i].artist
+		linklocation = tracks[i].coverartlink
+		if 'http:' in linklocation:
+			artist_folder = os.path.join(image_cache,artist)
+			stripedname = linklocation[linklocation.rindex('/')+1:]
+			filepath =os.path.join(artist_folder,stripedname)
+			if os.path.exists(artist_folder):
+				if os.path.exists(filepath):
+					tracks[i].coverartlink = filepath
+
+
+
+
 
 def filesaver(linklocation,filepath):
 
@@ -69,13 +87,4 @@ def filesaver(linklocation,filepath):
 	with open(filepath,'wb') as f:
 		f.write(req.result)
 
-		#netutils.getfiles(downdetails)
-
-
-
-
-
-
-
-
-
+		
