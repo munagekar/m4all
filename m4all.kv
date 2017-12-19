@@ -1,5 +1,7 @@
 #:kivy 1.10.0
 
+
+
 <GridItem>:
     size_hint_x:1
     AsyncImage:  
@@ -19,6 +21,7 @@
         halign: 'center'
         background_color: 0, 0, 0, 0.2
         markup:True
+        on_press: root.parent.parent.parent.manager.current='song'
 
 <RV>:
     size_hint_x:1
@@ -39,7 +42,12 @@
         
 
 
-<TopTrack>:
+<TopTrackScreen>:
     RV:
         size: self.parent.size
         pos: self.parent.pos
+<SongScreen>:
+    Button:
+        text:'Under Development'
+        on_press: root.manager.current = 'toptracks'
+

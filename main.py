@@ -62,15 +62,21 @@ class GridItem(FloatLayout):
     displaytext =StringProperty()
     imagelink = StringProperty()
 
-class TopTrack(Screen):
+class TopTrackScreen(Screen):
+    pass
+
+class SongScreen(Screen):
     pass
 
 class M4AllApp(App):
     def build(self):
         self.initilize_global_vars()
+        
         sm = ScreenManager()
-        sm.add_widget(TopTrack(name='toptracks'))
+        sm.add_widget(TopTrackScreen(name='toptracks'))
+        sm.add_widget(SongScreen(name='song'))
         return sm
+        
 
     def initilize_global_vars(self):
         global root_folder
