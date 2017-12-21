@@ -38,7 +38,7 @@ class RV(RecycleView):
                 needs_update = False
         
         if needs_update == True:
-            lfm.getTopTracks(self.updateTracks,50)
+            lfm.getTopTracks(self.updateTracks)
             
 
             
