@@ -2,6 +2,11 @@ from kivy.network.urlrequest import UrlRequest
 import os
 from threading import Thread
 
+
+thousand =1000
+million =thousand * thousand
+billion = million *thousand
+
 API_key = ''
 
 class Track:
@@ -9,12 +14,16 @@ class Track:
 	artist = None
 	coverartlink_artist= None
 	url= None
+	mbid = None
+	duration = None
 
-	def __init__(self,name=None,artist=None,coverartlink_artist=None,url=None):
+	def __init__(self,name=None,artist=None,coverartlink_artist=None,url=None,mbid = None, duration= None):
 		self.name=name
 		self.artist=artist
 		self.coverartlink_artist=coverartlink_artist
 		self.url=url
+		self.mbid = mbid
+		self.duration = duration
 
 def getTopTracks(callback,n=50):
 	Thread(target=getTopTrackThreadFn,args=(callback,n)).start()
@@ -67,13 +76,32 @@ def getTrackInfo(name,artist,callback):
 def getTrackInfoThreadFn(name,artist,callback):	
 	req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+artist+'&track='+name+'&format=json')
 	req.wait()
-	print (req.result)
+	jsonresult = req.result
+	mbid = jsonresult['track']['mbid']
+	duration = int(jsonresult['track']['duration'].strip())
+	listeners = easyreadnum(int(jsonresult['track']['listeners'].strip()))
+	playcount = easyreadnum(int(jsonresult['track']['playcount'].strip()))
+	print (jsonresult)
+	print (mbid)
+	print (duration)
+	print (listeners)
+	print (playcount)
+
+def easyreadnum(num):
+	if num >= billion:
+		return str(num//billion)+'B'
+	if num >=million:
+		return str(num//million)+'M'
+	if num >=thousand:
+		return str(num//thousand)+'K'
+
 
 def filesaver(linklocation,filepath):
-
 	req =UrlRequest(linklocation)
 	req.wait()
 	with open(filepath,'wb') as f:
 		f.write(req.result)
+
+
 
 		
