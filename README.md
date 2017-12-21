@@ -15,6 +15,7 @@ Installation Instructions
  - Android: Grab the Apk from Github. Install and you are ready to go
  - Linux: You need to get Kivy with all dependencies and run it
  - Windows: Need to get Kivy and all dependencies and run it.
+ - IOS: Need to get Kivy and all dependencies and run it,should work hopefully , not Tested.
 
 Features
 --------
@@ -25,6 +26,8 @@ Developed
 Under Development
  1. Song information Screen Under Development. Might take a while for a new android build to come up
  2. Improvement of LastFM Python Wrapper for Future Development
+ 3. Seperation of Caching Layer
+ 4. Image Compression with PIL
 
 The Team
 --------
