@@ -56,7 +56,7 @@ class RV(RecycleView):
     def datafiller(self,tracks):
         global image_cache
         lfm.cacheLocationFixer(tracks,image_cache)
-        self.data =[{'imagelink':tracks[i].coverartlink,'trackname':tracks[i].name,'trackartist':tracks[i].artist} for i in range(len(tracks))]
+        self.data =[{'imagelink':tracks[i].coverartlink_artist,'trackname':tracks[i].name,'trackartist':tracks[i].artist} for i in range(len(tracks))]
 
 class GridItem(FloatLayout):
     trackname = StringProperty()
