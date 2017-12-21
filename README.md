@@ -24,6 +24,17 @@ Developed
  
 Under Development
  1. Song information Screen Under Development. Might take a while for a new android build to come up
+ 2. Improvement of LastFM Python Wrapper for Future Development
+
+The Team
+--------
+
+ - Abhishek Munagekar: Main Developer and Source Code Testing on Linux and Windows, Android Building & Testing
+ - Debian Packaging: Need someone to package this to .deb. With the help of py2deb or stddeb or however possible and test the same for Ubuntu Linux
+ - Ios Packaging: Need someone to test and package the code
+ - Windows Packaging : Need someone to test and package the code for Windows so that easy to install.
+
+
 
 
 A special thanks to last.fm, proudly powered by last.fm
