@@ -56,10 +56,11 @@ class RV(RecycleView):
     def datafiller(self,tracks):
         global image_cache
         lfm.cacheLocationFixer(tracks,image_cache)
-        self.data =[{'displaytext':"[b]"+tracks[i].name+"\n-"+tracks[i].artist+"[/b]",'imagelink':tracks[i].coverartlink} for i in range(len(tracks))]
+        self.data =[{'imagelink':tracks[i].coverartlink,'trackname':tracks[i].name,'trackartist':tracks[i].artist} for i in range(len(tracks))]
 
 class GridItem(FloatLayout):
-    displaytext =StringProperty()
+    trackname = StringProperty()
+    trackartist = StringProperty()
     imagelink = StringProperty()
 
 class TopTrackScreen(Screen):
@@ -94,5 +95,6 @@ class M4AllApp(App):
 
 
 if __name__ == '__main__':
+    lfm.getTrackInfo('believe','cher',None)
     M4AllApp().run()
     

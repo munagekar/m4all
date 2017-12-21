@@ -44,10 +44,6 @@ def topTrackParser(req,result):
 		tracks.append(Track(trackname,trackartist,trackart,trackurl))
 	topTrackCallback(tracks)
 
-
-
-
-
 def imageCachePopulator(tracks,image_cache):
 	for i in range(len(tracks)):
 		artist = tracks[i].artist
@@ -74,8 +70,14 @@ def cacheLocationFixer(tracks,image_cache):
 					tracks[i].coverartlink = filepath
 
 
+def getTrackInfo(name,artist,callback):
+	Thread(target=getTrackInfoThreadFn,args=(name,artist,callback)).start()
+	
 
-
+def getTrackInfoThreadFn(name,artist,callback):	
+	req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+artist+'&track='+name+'&format=json')
+	req.wait()
+	print (req.result)
 
 def filesaver(linklocation,filepath):
 
