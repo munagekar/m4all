@@ -33,8 +33,7 @@ The Team
  - Debian Packaging: Need someone to package this to .deb. With the help of py2deb or stddeb or however possible and test the same for Ubuntu Linux
  - Ios Packaging: Need someone to test and package the code
  - Windows Packaging : Need someone to test and package the code for Windows so that easy to install.
-
-
+ - UI Development : Need someone to make design and make changes to User Interface
 
 
 A special thanks to last.fm, proudly powered by last.fm
