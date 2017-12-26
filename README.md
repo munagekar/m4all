@@ -28,6 +28,7 @@ Under Development
  2. Improvement of LastFM Python Wrapper for Future Development
  3. Seperation of Caching Layer
  4. Image Compression with PIL
+ 5. Complete Rewritting of Back-End.
 
 The Team
 --------
@@ -40,4 +41,8 @@ The Team
 
 
 A special thanks to last.fm, proudly powered by last.fm
+
+Disclaimer
+--------
+As a end user of this software code you are responsible for any violation of law as per your area of residence. The M4All team isn't responsible for any use of this code.
 
