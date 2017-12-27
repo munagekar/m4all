@@ -7,12 +7,12 @@ It is GUI app for Music. I have number of ideas which are being incorporated. Cu
 
 Supported Platforms
 -------------------
-M4All is built using Kivy, a cross platform python GUI framework. Thus it can be easily work on Windows, Linux and Android.
+M4All is built using Kivy, a cross platform python GUI framework. Thus it can be easily work on Windows, Linux and Android(not supported though, please build & debug on your own).
 
 Installation Instructions
 -------------------------
 
- - Android: Grab the Apk from Github. Install and you are ready to go
+ - Android: Android Support Has been removed since it takes too much time affecting development. Anyone interested in Android Building & Debugging please contact me.
  - Linux: You need to get Kivy with all dependencies and run it
  - Windows: Need to get Kivy and all dependencies and run it.
  - IOS: Need to get Kivy and all dependencies and run it,should work hopefully , not Tested.
@@ -28,7 +28,6 @@ Under Development
  2. Improvement of LastFM Python Wrapper for Future Development
  3. Seperation of Caching Layer
  4. Image Compression with PIL
- 5. Complete Rewritting of Back-End.
 
 The Team
 --------
