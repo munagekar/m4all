@@ -25,9 +25,8 @@ Developed
  
 Under Development
  1. Song information Screen Under Development. Might take a while for a new android build to come up
- 2. Improvement of LastFM Python Wrapper for Future Development
- 3. Seperation of Caching Layer
- 4. Image Compression with PIL
+ 2. Addition of Logging Layer for Quick Debugging
+ 3. Image Compression with PIL
 
 The Team
 --------
