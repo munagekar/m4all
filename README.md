@@ -32,11 +32,12 @@ Under Development
 The Team
 --------
 
- - Abhishek Munagekar: Main Developer and Source Code Testing on Linux and Windows, Android Building & Testing
+ - Abhishek Munagekar: Main Developer and Source Code Testing on Linux and Windows.
  - Debian Packaging: Need someone to package this to .deb. With the help of py2deb or stddeb or however possible and test the same for Ubuntu Linux
  - Ios Packaging: Need someone to test and package the code
  - Windows Packaging : Need someone to test and package the code for Windows so that easy to install.
  - UI Development : Need someone to make design and make changes to User Interface
+ - Android Packaging : Need someone to test, debug & package for android.
 
 
 A special thanks to last.fm, proudly powered by last.fm
