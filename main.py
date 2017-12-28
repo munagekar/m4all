@@ -10,6 +10,14 @@ from lfm import LfmHelper
 import os
 import time
 
+
+#Global Variables
+#Screen Manager
+sm = None
+songscreen = None
+
+
+
 lfm = None          #LFM helper object- easy interface to Lfm with caching, threading support
 
 class RV(RecycleView):
@@ -35,6 +43,11 @@ class GridItem(FloatLayout):
     trackartist = StringProperty()
     imagelink = StringProperty()
 
+    def on_press_action(self):
+        global sm
+        sm.current='song'
+
+
 class TopTrackScreen(Screen):
     pass
 
@@ -44,10 +57,12 @@ class SongScreen(Screen):
 class M4AllApp(App):
     def build(self):
         self.initilize_global_vars()
-        
+        global sm
+        global songscreen
         sm = ScreenManager()
         sm.add_widget(TopTrackScreen(name='toptracks'))
-        sm.add_widget(SongScreen(name='song'))
+        songscreen = SongScreen(name='song')
+        sm.add_widget(songscreen)
         return sm
         
 
