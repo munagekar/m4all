@@ -88,8 +88,6 @@ def easyreadnum(num):
 def pathfixer(path):
 	return path.replace('?','(ques)')
 
-
-
 def remotefilesaver(linklocation,filepath):
 	req =UrlRequest(linklocation)
 	req.wait()
