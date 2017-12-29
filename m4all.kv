@@ -42,6 +42,23 @@
         size: self.parent.size
         pos: self.parent.pos
 <SongScreen>:
-    Button:
-        text:'Under Development'
-        on_press: root.manager.current = 'toptracks'
+    BoxLayout:
+        orientation: 'horizontal'
+        BoxLayout:
+            orientation: 'vertical'
+            AsyncImage:
+                source:'test.png'
+                size : (self.parent.width,self.parent.width)
+                size_hint: (None, None)
+            Button:
+                text:'Under Development'
+                on_press: root.manager.current = 'toptracks'
+                size: self.texture_size
+                size_hint_y: None
+                size_hint_x: 1
+            Widget:
+                size_hint_y: 1
+
+            
+        Button:
+            text:'Second Button'
