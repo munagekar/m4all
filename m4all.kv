@@ -42,6 +42,7 @@
         size: self.parent.size
         pos: self.parent.pos
 <SongScreen>:
+    id: songscreen
     BoxLayout:
         orientation: 'horizontal'
         BoxLayout:
@@ -50,6 +51,21 @@
                 source:'test.png'
                 size : (self.parent.width,self.parent.width)
                 size_hint: (None, None)
+            Label:
+                text:songscreen.trackname
+                size_hint_y: None
+                size_hint_x: 1
+                size:self.texture_size
+            Label:
+                text:'-'+songscreen.trackartist
+                size_hint_y: None
+                size_hint_x: 1
+                size:self.texture_size
+            Label:
+                text: 'Listeners:'+songscreen.listeners+'\n'+'Playcount:'+songscreen.playcount
+                size_hint_y: None
+                size_hint_x: 1
+                size:self.texture_size
             Button:
                 text:'Under Development'
                 on_press: root.manager.current = 'toptracks'

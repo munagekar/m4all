@@ -7,14 +7,11 @@ from kivy.network.urlrequest import UrlRequest
 import os
 import shutil
 import time
+import utils
 from threading import Thread
 from kivy.storage.dictstore import DictStore
 
-#Fix all possible errors in the store
 
-thousand =1000
-million =thousand * thousand
-billion = million *thousand
 
 API_key = ''
 
@@ -74,19 +71,8 @@ def getTrackInfoThreadFn(name,artist,callback):
 	listeners = easyreadnum(int(jsonresult['track']['listeners'].strip()))
 	playcount = easyreadnum(int(jsonresult['track']['playcount'].strip()))
 
-def easyreadnum(num):
-	if num >= billion:
-		return str(num//billion)+'B'
-	if num >=million:
-		return str(num//million)+'M'
-	if num >=thousand:
-		return str(num//thousand)+'K'
 '''
 
-
-#Path fixing for cross platform support
-def pathfixer(path):
-	return path.replace('?','(ques)')
 
 def remotefilesaver(linklocation,filepath):
 	req =UrlRequest(linklocation)
@@ -164,8 +150,8 @@ class LfmHelper():
 			trackart_high = str(jsontrack['image'][2]['#text']).replace("https:","http:")
 			trackart_vhigh = str(jsontrack['image'][3]['#text']).replace("https:","http:")
 			curTrack = Track(trackname,trackartist)
-			curTrack.listeners = listeners
-			curTrack.playcount = playcount
+			curTrack.listeners = int(listeners)
+			curTrack.playcount = int(playcount)
 			curArtist = Artist(trackartist)
 			curArtist.setImageData(trackart_low,trackart_mid,trackart_high,trackart_vhigh)
 			self.updateArtist(curArtist) #Update the artist data
@@ -217,10 +203,18 @@ class LfmHelper():
 		trackname = track.name
 		artist_folder = os.path.join(self.lfmcachedir,trackartist)
 		track_file = os.path.join(artist_folder,trackname)
-		track_file = pathfixer(track_file)
+		track_file = utils.pathfixer(track_file)
 		store = DictStore(track_file)
-		store['lastupdated'] = {'lastupdated':time.time(),'track':track}
+		store['track'] = {'lastupdated':time.time(),'track':track}
 		#TODO add more stuff as app gets developed
+
+	def getTrackDetails(self,artistname,trackname):
+		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
+		store = DictStore(cachefile)
+		#TODO Incomplete method need to perform proper track detail update here
+		return store['track']['track']
+
+
 
 
 

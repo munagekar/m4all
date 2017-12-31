@@ -9,6 +9,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from lfm import LfmHelper
 import os
 import time
+import utils
 
 
 #Global Variables
@@ -46,13 +47,27 @@ class GridItem(FloatLayout):
     def on_press_action(self):
         global sm
         sm.current='song'
+        songscreen.update(self.trackname,self.trackartist)
+
 
 
 class TopTrackScreen(Screen):
     pass
 
+
 class SongScreen(Screen):
-    pass
+    trackname = StringProperty()
+    trackartist = StringProperty()
+    listeners = StringProperty()
+    playcount = StringProperty()
+    imagelink = StringProperty()
+
+    def update(self,trackname, trackartist):
+        self.trackname = trackname
+        self.trackartist = trackartist
+        track = lfm.getTrackDetails(trackartist,trackname)
+        self.playcount = utils.easyreadnum(track.playcount)
+        self.listeners = utils.easyreadnum(track.listeners)
 
 class M4AllApp(App):
     def build(self):
