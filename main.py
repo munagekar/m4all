@@ -65,7 +65,11 @@ class SongScreen(Screen):
     def update(self,trackname, trackartist):
         self.trackname = trackname
         self.trackartist = trackartist
-        track = lfm.getTrackDetails(trackartist,trackname)
+        lfm.getTrackDetails(trackartist,trackname,self.setDetails)
+
+
+    def setDetails(self,track):
+        #TODO ADD More stuff inside this function
         self.playcount = utils.easyreadnum(track.playcount)
         self.listeners = utils.easyreadnum(track.listeners)
 

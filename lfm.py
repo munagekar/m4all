@@ -56,24 +56,6 @@ class Artist:
 		self.coverart_high = h
 		self.coverart_vhigh = v
 
-'''
-
-def getTrackInfo(name,artist,callback):
-	Thread(target=getTrackInfoThreadFn,args=(name,artist,callback)).start()
-	
-
-def getTrackInfoThreadFn(name,artist,callback):	
-	req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+artist+'&track='+name+'&format=json')
-	req.wait()
-	jsonresult = req.result
-	mbid = jsonresult['track']['mbid']
-	duration = int(jsonresult['track']['duration'].strip())
-	listeners = easyreadnum(int(jsonresult['track']['listeners'].strip()))
-	playcount = easyreadnum(int(jsonresult['track']['playcount'].strip()))
-
-'''
-
-
 def remotefilesaver(linklocation,filepath):
 	req =UrlRequest(linklocation)
 	req.wait()
@@ -205,14 +187,57 @@ class LfmHelper():
 		track_file = os.path.join(artist_folder,trackname)
 		track_file = utils.pathfixer(track_file)
 		store = DictStore(track_file)
-		store['track'] = {'lastupdated':time.time(),'track':track}
+		store['track'] = {'lastupdated':time.time(),'track':track,'actualtrackfetch':False}
 		#TODO add more stuff as app gets developed
 
-	def getTrackDetails(self,artistname,trackname):
+	def getTrackDetails(self,artistname,trackname,callback):
+		needsupdate = True
 		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
 		store = DictStore(cachefile)
+		curtime = time.time()
+		lastupdated = store['track']['lastupdated']
+		track = store['track']['track']
+		actualtrackfetch = store['track']['actualtrackfetch']
+		if actualtrackfetch==True and curtime - lastupdated < 36000:
+			callback(track)
+
 		#TODO Incomplete method need to perform proper track detail update here
-		return store['track']['track']
+		else:
+			Thread(target=self.getTopTrackDetailsThreadFn,args=(artistname,trackname,callback,)).start()
+
+	def getTopTrackDetailsThreadFn(self,artistname,trackname,callback):
+		req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+utils.spacefixer(artistname)+'&track='+utils.spacefixer(trackname)+'&format=json')
+		req.wait()
+		result = req.result
+		print (result)
+		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
+		store = DictStore(cachefile)
+		track = store['track']['track']
+		track.duration = int(result['track']['duration'])
+		track.playcount = int(result['track']['playcount'])
+		track.listeners = int(result['track']['listeners'])
+		if 'album' in result['track']:
+			track.album = result['track']['album']['title']
+			track.coverart_low =result['track']['album']['image'][0]
+			track.coverart_med = result['track']['album']['image'][1]
+			track.coverart_high = result['track']['album']['image'][2]
+			track.coverart_vhigh = result['track']['album']['image'][3]
+		else:
+			print ('No album data')
+		track.tags =[]
+		for i in range(len(result['track']['toptags']['tag'])):
+			track.tags.append(result['track']['toptags']['tag'][i]['name'])
+		if 'wiki' in result['track']:
+			track.wiki = result['track']['wiki']['content']
+		else:
+			track.wiki = 'Not available. Do contribue some on LastFM'
+
+		store['track'] = {'track':track, 'lastupdated':time.time(), 'actualtrackfetch':True}
+		callback(track)
+
+
+
+
 
 
 

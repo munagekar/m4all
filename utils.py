@@ -3,7 +3,6 @@ Misc Utility Functions Go here
 '''
 
 
-
 thousand =1000
 million =thousand * thousand
 billion = million *thousand
@@ -20,7 +19,7 @@ def easyreadnum(num):
 
 #Website APIs need space fixing
 def spacefixer(string):
-	return path.replace(' ','+')
+	return string.replace(' ','+')
 
 
 #Path fixing for cross platform support
