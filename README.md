@@ -25,9 +25,8 @@ Developed
  
 Under Development
  1. Song information Screen Under Development. Might take a while for a new android build to come up
- 2. Addition of Logging Layer for Quick Debugging
- 3. Image Compression with PIL
- 4. UI design is not paid much attention to instead more time is spent on adding features. Improvement of ui is later concern.
+ 2. Image Compression with PIL
+ 3. UI design is not paid much attention to instead more time is spent on adding features. Improvement of ui is later concern.
 
 The Team
 --------
