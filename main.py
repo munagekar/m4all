@@ -61,8 +61,15 @@ class SongScreen(Screen):
     listeners = StringProperty()
     playcount = StringProperty()
     imagelink = StringProperty()
+    wiki = StringProperty()
+
+    def reset(self):
+        self.listeners = 'Updating'
+        self.playcount = 'Updating'
+        self.wiki = 'fetching'
 
     def update(self,trackname, trackartist):
+        self.reset()
         self.trackname = trackname
         self.trackartist = trackartist
         lfm.getTrackDetails(trackartist,trackname,self.setDetails)
@@ -72,6 +79,7 @@ class SongScreen(Screen):
         #TODO ADD More stuff inside this function
         self.playcount = utils.easyreadnum(track.playcount)
         self.listeners = utils.easyreadnum(track.listeners)
+        self.wiki = track.wiki
 
 class M4AllApp(App):
     def build(self):

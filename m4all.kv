@@ -47,8 +47,8 @@
             orientation: 'vertical'
             AsyncImage:
                 source:'test.png'
-                size : (self.parent.width,self.parent.width)
-                size_hint: (None, None)
+                size : (dp(300),dp(300))
+                size_hint: (1, 1)
             Label:
                 text:songscreen.trackname
                 size_hint_y: None
@@ -73,6 +73,9 @@
             Widget:
                 size_hint_y: 1
 
-            
-        Button:
-            text:'Second Button'
+        ScrollView:    
+            Label:
+                text:songscreen.wiki
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]

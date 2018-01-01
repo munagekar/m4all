@@ -230,7 +230,7 @@ class LfmHelper():
 		if 'wiki' in result['track']:
 			track.wiki = result['track']['wiki']['content']
 		else:
-			track.wiki = 'Not available. Do contribue some on LastFM'
+			track.wiki = 'Not available. Could you contribute some information on LastFM'
 
 		store['track'] = {'track':track, 'lastupdated':time.time(), 'actualtrackfetch':True}
 		callback(track)
