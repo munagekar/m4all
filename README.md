@@ -3,7 +3,13 @@ M4All
 
 Introduction
 ------------
-It is GUI app for Music. I have number of ideas which are being incorporated. Current focus is on Music Discovery. This is a huge side project and is being rapidly developed.
+It is GUI app for Music. I have number of ideas which are being incorporated. Current focus is on Music Discovery. This is a huge side project and is being rapidly developed. 
+
+Screenshots
+------------
+A picture is worth a thousand words. 
+![Screenshot](https://github.com/munagekar/m4all/blob/master/toptrackscreen.jpg)
+
 
 Supported Platforms
 -------------------
