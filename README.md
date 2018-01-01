@@ -22,22 +22,29 @@ Installation Instructions
  - Linux: You need to get Kivy with all dependencies and run it
  - Windows: Need to get Kivy and all dependencies and run it.
  - IOS: Need to get Kivy and all dependencies and run it,should work hopefully , not Tested.
+ 
+Why isn't it Packaged ?
+-------------------------
+ 1. This application is not yet complete
+ 2. Packaging involves cythonizing the code and then using pyinstaller for Windows and Linux and this takes time
+ 3. Creation of Deb for Ubuntu Linux would need py2Deb package building, which I am not interested in.
+ 4. Apple Environment needs Apple devices for testing as well as building. And I don't own a single apple device.
 
 Features
 --------
 Developed
  1. See the top tracks in the world
- 2. Caching support for Images
+ 2. See song info, playcount, listeners and lyrics.
  
 Under Development
- 1. Song information Screen Under Development. Might take a while for a new android build to come up
+ 1. Song information Screen Under Development.
  2. Image Compression with PIL
  3. UI design is not paid much attention to instead more time is spent on adding features. Improvement of ui is later concern.
 
 The Team
 --------
 
- - Abhishek Munagekar: Main Developer and Source Code Testing on Linux and Windows.
+ - Abhishek Munagekar: Sole Team Member :-)
  - Debian Packaging: Need someone to package this to .deb. With the help of py2deb or stddeb or however possible and test the same for Ubuntu Linux
  - Ios Packaging: Need someone to test and package the code
  - Windows Packaging : Need someone to test and package the code for Windows so that easy to install.
