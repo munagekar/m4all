@@ -11,8 +11,6 @@ import utils
 from threading import Thread
 from kivy.storage.dictstore import DictStore
 
-
-
 API_key = ''
 
 class Track:
@@ -235,6 +233,32 @@ class LfmHelper():
 
 		store['track'] = {'track':track, 'lastupdated':time.time(), 'actualtrackfetch':True}
 		callback(track)
+
+	def getTrackLyrics(self, artistname , trackname, callback):
+		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
+		store = DictStore(cachefile)
+		if 'lyrics' in store:
+			callback(store['lyrics']['lyrics'])
+		else:
+			Thread(target=self.getTrackLyricsThreadFn,args=(artistname,trackname,callback,)).start()
+
+	def getTrackLyricsThreadFn(self,artistname,trackname,callback):
+		base_api_link = 'http://lyricscore.eu5.org/api/v1/?'
+		request_url = base_api_link +'artist='+utils.urlfixer(artistname)+'&title='+utils.urlfixer(trackname)+'&format=xml'
+		print (request_url)
+		req =UrlRequest(request_url)
+		req.wait()
+		result = req.result
+		print (result)
+		result = result[result.index('<lyrics>')+8:result.rindex('</lyrics>')]
+		result = result.replace('<br />','\n')
+		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
+		store = DictStore(cachefile)
+		store['lyrics']= {'lyrics':result}
+		callback(result)
+
+
+
 
 
 

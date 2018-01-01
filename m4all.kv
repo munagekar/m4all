@@ -83,4 +83,10 @@
                         size_hint_y: None
                         height: self.texture_size[1]
             TabbedPanelItem:
-                text: 'Lyrics'
+                text: 'lyrics'
+                ScrollView:    
+                    Label:
+                        text:songscreen.lyrics
+                        text_size: self.width, None
+                        size_hint_y: None
+                        height: self.texture_size[1]

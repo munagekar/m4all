@@ -63,18 +63,23 @@ class SongScreen(Screen):
     playcount = StringProperty()
     imagelink = StringProperty()
     wiki = StringProperty()
+    lyrics = StringProperty()
 
     def reset(self):
         self.listeners = 'Updating'
         self.playcount = 'Updating'
         self.wiki = 'fetching'
+        self.lyrics = 'fetching'
 
     def update(self,trackname, trackartist):
         self.reset()
         self.trackname = trackname
         self.trackartist = trackartist
         lfm.getTrackDetails(trackartist,trackname,self.setDetails)
+        lfm.getTrackLyrics(trackartist,trackname,self.setLyrics)
 
+    def setLyrics(self,lyrics): #Callback Function for setting the lyrics
+        self.lyrics = lyrics
 
     def setDetails(self,track):
         #TODO ADD More stuff inside this function
