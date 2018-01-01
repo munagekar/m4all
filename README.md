@@ -49,5 +49,5 @@ A special thanks to last.fm, proudly powered by last.fm
 
 Disclaimer
 --------
-As a end user of this software code you are responsible for any violation of law as per your area of residence. The M4All team isn't responsible for any use of this code.
+As a end user of this software code you are responsible for any violation of law as per your area of residence. The M4All team isn't responsible for any use of this code. We do not host any content in app or on our own servers and merely act as content providers.
 
