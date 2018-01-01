@@ -65,17 +65,22 @@
                 size_hint_x: 1
                 size:self.texture_size
             Button:
-                text:'Under Development'
+                text:'Back'
                 on_press: root.manager.current = 'toptracks'
                 size: self.texture_size
                 size_hint_y: None
                 size_hint_x: 1
             Widget:
                 size_hint_y: 1
-
-        ScrollView:    
-            Label:
-                text:songscreen.wiki
-                text_size: self.width, None
-                size_hint_y: None
-                height: self.texture_size[1]
+        TabbedPanel:
+            do_default_tab: False
+            TabbedPanelItem:
+                text: 'Wiki'
+                ScrollView:    
+                    Label:
+                        text:songscreen.wiki
+                        text_size: self.width, None
+                        size_hint_y: None
+                        height: self.texture_size[1]
+            TabbedPanelItem:
+                text: 'Lyrics'

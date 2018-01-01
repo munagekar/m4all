@@ -1,3 +1,4 @@
+# coding=utf-8
 '''
 Misc Utility Functions Go here
 '''
@@ -18,8 +19,11 @@ def easyreadnum(num):
 
 
 #Website APIs need space fixing
-def spacefixer(string):
-	return string.replace(' ','+')
+def urlfixer(string):
+	string = string.encode('utf-8')
+	string = string.replace(' ','+').replace('&','%26')
+	print string
+	return string
 
 
 #Path fixing for cross platform support

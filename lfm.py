@@ -206,7 +206,8 @@ class LfmHelper():
 			Thread(target=self.getTopTrackDetailsThreadFn,args=(artistname,trackname,callback,)).start()
 
 	def getTopTrackDetailsThreadFn(self,artistname,trackname,callback):
-		req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+utils.spacefixer(artistname)+'&track='+utils.spacefixer(trackname)+'&format=json')
+		req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+utils.urlfixer(artistname)+'&track='+utils.urlfixer(trackname)+'&format=json')
+		print ('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+utils.urlfixer(artistname)+'&track='+utils.urlfixer(trackname)+'&format=json')
 		req.wait()
 		result = req.result
 		print (result)
