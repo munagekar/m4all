@@ -72,6 +72,16 @@
                 size_hint_x: 1
             Widget:
                 size_hint_y: 1
+        Widget:
+            size_hint_y: 1
+            size_hint_x: None
+            size: dp(4),self.height
+            canvas:
+                Rectangle:
+                    pos: (self.center_x - dp(2), 0)
+                    size: dp(4), self.height
+
+
         TabbedPanel:
             do_default_tab: False
             TabbedPanelItem:
