@@ -23,6 +23,8 @@ Installation Instructions
  - Windows: Need to get Kivy and all dependencies and run it.
  - IOS: Need to get Kivy and all dependencies and run it,should work hopefully , not Tested.
  
+ Just a head's up the API key in the LastFM lfm.py module is missing. Obtain a free key and use the same. The m4all team would add in the key when a package is created through cythonized obfuscated encrypted code.
+ 
 Why isn't it Packaged ?
 -------------------------
  1. This application is not yet complete
