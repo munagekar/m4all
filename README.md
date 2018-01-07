@@ -9,7 +9,9 @@ Screenshots
 ------------
 A picture is worth a thousand words. 
 ![Screenshot](https://github.com/munagekar/m4all/blob/master/toptrackscreen.jpg)
+
 ![Screenshot](https://github.com/munagekar/m4all/blob/master/songinfolyrics.jpg)
+
 ![Screenshot](https://github.com/munagekar/m4all/blob/master/songinfowiki.jpg)
 
 
