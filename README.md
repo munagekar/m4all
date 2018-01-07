@@ -8,10 +8,13 @@ It is GUI app for Music. I have number of ideas which are being incorporated. Cu
 Screenshots
 ------------
 A picture is worth a thousand words. 
+Latest Top Tracks
 ![Screenshot](https://github.com/munagekar/m4all/blob/master/toptrackscreen.jpg)
 
+See Lyrics for Tracks
 ![Screenshot](https://github.com/munagekar/m4all/blob/master/songinfolyrics.jpg)
 
+See the wiki for Tracks
 ![Screenshot](https://github.com/munagekar/m4all/blob/master/songinfowiki.jpg)
 
 
