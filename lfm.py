@@ -111,7 +111,6 @@ class LfmHelper():
 
 	def getTopTrackThreadFn(self,callback):
 		n =50
-		print ('Attempting URL fetch to get the top tracks')
 		req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key='+API_key+'&format=json&limit='+str(n))
 		req.wait()
 		jsonresult = req.result
@@ -175,7 +174,6 @@ class LfmHelper():
 		print (check_path)
 		if os.path.exists(check_path):	#Check if the cached copy exists else return the link
 			return check_path
-		print ('Failed to find the path')
 		return imagelink
 
 	def updateTrack(self,track):
@@ -211,16 +209,21 @@ class LfmHelper():
 		print (result)
 		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
 		store = DictStore(cachefile)
+		while not os.path.exists(cachefile) or not 'track' in store :
+			print 'Had to sleep'
+			store = DictStore(cachefile)
+			time.sleep(1)
 		track = store['track']['track']
 		track.duration = int(result['track']['duration'])
 		track.playcount = int(result['track']['playcount'])
 		track.listeners = int(result['track']['listeners'])
 		if 'album' in result['track']:
 			track.album = result['track']['album']['title']
-			track.coverart_low =result['track']['album']['image'][0]
-			track.coverart_med = result['track']['album']['image'][1]
-			track.coverart_high = result['track']['album']['image'][2]
-			track.coverart_vhigh = result['track']['album']['image'][3]
+			track.coverart_low =result['track']['album']['image'][0]['#text'].replace("https:","http:")
+			track.coverart_med = result['track']['album']['image'][1]['#text'].replace("https:","http:")
+			track.coverart_high = result['track']['album']['image'][2]['#text'].replace("https:","http:")
+			track.coverart_vhigh = result['track']['album']['image'][3]['#text'].replace("https:","http:")
+			self.updateTrackArt(track)
 		else:
 			print ('No album data')
 		track.tags =[]
@@ -256,6 +259,32 @@ class LfmHelper():
 		store = DictStore(cachefile)
 		store['lyrics']= {'lyrics':result}
 		callback(result)
+
+	def updateTrackArt(self,track):
+		imagelink = track.coverart_vhigh
+		print 'Iniside update Track got the link'
+		print imagelink
+		if imagelink ==None:
+			return
+		strippedname = "vh_"+imagelink[imagelink.rindex('/')+1:]
+		imagepath = os.path.join(self.lfmcachedir,track.artist,strippedname)
+		if not os.path.exists(imagepath):
+			Thread(target=remotefilesaver,args=(imagelink,imagepath)).start()
+
+	def getTrackCoverPath(self,track):
+		cachefile = os.path.join(self.lfmcachedir,track.artist,utils.pathfixer(track.name))
+		store = DictStore(cachefile)
+		track = store['track']['track']
+		imagelink = track.coverart_vhigh
+		if imagelink == None:
+			return self.getArtistCoverPath(track.artist)
+		strippedname = 'vh_'+imagelink[imagelink.rindex('/')+1:]
+		check_path = os.path.join(self.lfmcachedir,track.artist,strippedname)
+		if os.path.exists(check_path):	#Check if the cached copy exists else return the link
+			return check_path
+		return imagelink
+
+
 
 
 

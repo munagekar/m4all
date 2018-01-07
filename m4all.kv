@@ -46,7 +46,7 @@
         BoxLayout:
             orientation: 'vertical'
             AsyncImage:
-                source:'test.png'
+                source:songscreen.trackimage
                 size : (dp(300),dp(300))
                 size_hint: (1, 1)
             Label:
@@ -60,7 +60,7 @@
                 size_hint_x: 1
                 size:self.texture_size
             Label:
-                text: 'Listeners:'+songscreen.listeners+'\n'+'Playcount:'+songscreen.playcount
+                text: 'Duration:'+songscreen.duration+'\nListeners:'+songscreen.listeners+'\n'+'Playcount:'+songscreen.playcount
                 size_hint_y: None
                 size_hint_x: 1
                 size:self.texture_size
