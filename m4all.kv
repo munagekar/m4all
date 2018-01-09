@@ -44,6 +44,7 @@
     BoxLayout:
         orientation: 'horizontal'
         BoxLayout:
+            id: songscreenleftpane
             orientation: 'vertical'
             AsyncImage:
                 source:songscreen.trackimage
@@ -64,6 +65,46 @@
                 size_hint_y: None
                 size_hint_x: 1
                 size:self.texture_size
+            StackLayout:
+                id: tagstack
+                spacing: [dp(4),dp(2)]
+                size_hint_y:None
+                Label: 
+                    text: 'Tags:'
+                    size:self.texture_size
+                    size_hint_y:None 
+                    size_hint_x:None
+                Button:
+                    id : tagstack1
+                    text: 'Unavailable'
+                    size:self.texture_size
+                    size_hint_y:None 
+                    size_hint_x:None
+                Button:
+                    id:tagstack2
+                    text: 'Unavailable'
+                    size:self.texture_size
+                    size_hint_y:None 
+                    size_hint_x:None
+                Button:
+                    id:tagstack3
+                    text: 'Unavailable'
+                    size:self.texture_size
+                    size_hint_y:None 
+                    size_hint_x:None
+                Button:
+                    id:tagstack4
+                    text: 'Unavailable'
+                    size:self.texture_size
+                    size_hint_y:None 
+                    size_hint_x:None
+                Button:
+                    id:tagstack5
+                    text: 'Unavailable'
+                    size:self.texture_size
+                    size_hint_y:None 
+                    size_hint_x:None
+
             Button:
                 text:'Back'
                 on_press: root.manager.current = 'toptracks'

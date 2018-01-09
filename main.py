@@ -93,6 +93,11 @@ class SongScreen(Screen):
         self.wiki = track.wiki
         self.duration = str(track.duration)
         self.trackimage = lfm.getTrackCoverPath(track)
+        tagstackitems = [self.ids.tagstack1,self.ids.tagstack2,self.ids.tagstack3,self.ids.tagstack4,self.ids.tagstack5]
+        for i in range(len(track.tags)):
+            tagstackitems[i].text = track.tags[i]
+
+
 
 class M4AllApp(App):
     def build(self):
