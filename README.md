@@ -3,7 +3,10 @@ M4All
 
 Introduction
 ------------
-It is GUI app for Music. I have number of ideas which are being incorporated. Current focus is on Music Discovery. This is a huge side project and is being rapidly developed. 
+Before you criticize the UI,this would have been a terminal based Utility but then sole user would have been me.Luckily I decided against my better Judgement and decided to make a GUI. Most of the music apps be it Google Play Music, Spotify , LastFM , Saavn , Gaana, Jio Music lack something or the other. They are not cross platform, have limited features, hard to use, poor recommendations, can't play local files or some other crap, thus this project was started with the Aim to create the 'open source' music app. Open Source Makes it rather easy, we hardly have any competitiors now. Anyways, Development on the App would continue till 
+ 1. I run out of ideas.(Rather Difficult)
+ 2. Or Music Apps become seriously became better
+
 
 Screenshots
 ------------
