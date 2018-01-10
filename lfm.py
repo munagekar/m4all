@@ -133,20 +133,16 @@ class LfmHelper():
 		for i in range(n):
 			jsontrack =jsontracklist[i]
 			trackname = jsontrack['name']
-			playcount = jsontrack['playcount']
-			listeners = jsontrack['listeners']
 			trackartist = jsontrack['artist']['name']
 			trackart_low = str(jsontrack['image'][0]['#text']).replace("https:","http:")
 			trackart_mid = str(jsontrack['image'][1]['#text']).replace("https:","http:")
 			trackart_high = str(jsontrack['image'][2]['#text']).replace("https:","http:")
 			trackart_vhigh = str(jsontrack['image'][3]['#text']).replace("https:","http:")
 			curTrack = Track(trackname,trackartist)
-			curTrack.listeners = int(listeners)
-			curTrack.playcount = int(playcount)
 			curArtist = Artist(trackartist)
 			curArtist.setImageData(trackart_low,trackart_mid,trackart_high,trackart_vhigh)
 			self.updateArtist(curArtist) #Update the artist data
-			self.updateTrack(curTrack,actualfetch=false)
+			self.updateTrack(curTrack,actualfetch=False)
 			#Add the track to the return list
 			tracks.append(curTrack)
 		#Cache the top tracks here
