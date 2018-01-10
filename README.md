@@ -45,12 +45,13 @@ Features
 --------
 Developed
  1. See the top tracks in the world
- 2. See song info, playcount, listeners and lyrics.
+ 2. See song info,tags, playcount, listeners and lyrics.
  
 Under Development
  1. Song information Screen Under Development.
  2. Image Compression with PIL
  3. UI design is not paid much attention to instead more time is spent on adding features. Improvement of ui is later concern.
+ 4. View Similar Tracks under the Song Info Screen
 
 The Team
 --------
