@@ -74,6 +74,9 @@ class SongScreen(Screen):
         self.lyrics = 'fetching'
         self.duration = 'Updating'
         self.trackimage = 'test.png'
+        tagstackitems = [self.ids.tagstack1,self.ids.tagstack2,self.ids.tagstack3,self.ids.tagstack4,self.ids.tagstack5]
+        for tagstackitem in tagstackitems:
+            tagstackitem.text = 'Unavailable'
 
     def update(self,trackname, trackartist):
         self.reset()
