@@ -142,7 +142,6 @@ class LfmHelper():
 			curArtist = Artist(trackartist)
 			curArtist.setImageData(trackart_low,trackart_mid,trackart_high,trackart_vhigh)
 			self.updateArtist(curArtist) #Update the artist data
-			self.updateTrack(curTrack,actualfetch=False)
 			#Add the track to the return list
 			tracks.append(curTrack)
 		#Cache the top tracks here
@@ -187,32 +186,19 @@ class LfmHelper():
 			return check_path
 		return imagelink
 
-	#Updates Track Details in the Local Cache
-	def updateTrack(self,track,actualfetch):
-		trackartist = track.artist
-		trackname = track.name
-		artist_folder = os.path.join(self.lfmcachedir,trackartist)
-		track_file = os.path.join(artist_folder,trackname)
-		track_file = utils.pathfixer(track_file)
-		store = DictStore(track_file)
-		store['track'] = {'lastupdated':time.time(),'track':track,'actualtrackfetch':actualfetch}
-		#TODO add more stuff as app gets developed
-
 	#Does an actual song info fetch from LastFm for a track
 	def getTrackDetails(self,artistname,trackname,callback):
 		needsupdate = True
 		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
-		store = DictStore(cachefile)
-		curtime = time.time()
-		lastupdated = store['track']['lastupdated']
-		track = store['track']['track']
-		actualtrackfetch = store['track']['actualtrackfetch']
-		if actualtrackfetch==True and curtime - lastupdated < 36000:
-			callback(track)
-
-		#TODO Incomplete method need to perform proper track detail update here
-		else:
-			Thread(target=self.getTopTrackDetailsThreadFn,args=(artistname,trackname,callback,)).start()
+		if os.path.exists(cachefile):
+			store = DictStore(cachefile)
+			curtime = time.time()
+			lastupdated = store['track']['lastupdated']
+			track = store['track']['track']
+			if curtime - lastupdated < 36000:
+				callback(track)
+				return
+		Thread(target=self.getTopTrackDetailsThreadFn,args=(artistname,trackname,callback,)).start()
 
 	#Function to get Similar Tracks
 	def getSimilarTracks():
@@ -227,11 +213,7 @@ class LfmHelper():
 		print (result)
 		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
 		store = DictStore(cachefile)
-		while not os.path.exists(cachefile) or not 'track' in store :
-			print 'Had to sleep'
-			store = DictStore(cachefile)
-			time.sleep(1)
-		track = store['track']['track']
+		track = Track(trackname, artistname)
 		track.duration = int(result['track']['duration'])
 		track.playcount = int(result['track']['playcount'])
 		track.listeners = int(result['track']['listeners'])
@@ -242,8 +224,6 @@ class LfmHelper():
 			track.coverart_high = result['track']['album']['image'][2]['#text'].replace("https:","http:")
 			track.coverart_vhigh = result['track']['album']['image'][3]['#text'].replace("https:","http:")
 			self.updateTrackArt(track)
-		else:
-			print ('No album data')
 		track.tags =[]
 		for i in range(len(result['track']['toptags']['tag'])):
 			track.tags.append(result['track']['toptags']['tag'][i]['name'])
@@ -252,7 +232,7 @@ class LfmHelper():
 		else:
 			track.wiki = 'Not available. Could you contribute some information on LastFM'
 
-		store['track'] = {'track':track, 'lastupdated':time.time(), 'actualtrackfetch':True}
+		store['track'] = {'track':track, 'lastupdated':time.time()}
 		callback(track)
 
 	#Gets the lyrics given trackname & artistname
