@@ -11,8 +11,10 @@ import utils
 from threading import Thread
 from kivy.storage.dictstore import DictStore
 
+#API Key For Last FM
 API_key = ''
 
+#This is a class for a Single Song
 class Track:
 	name = None
 	artist = None
@@ -33,6 +35,7 @@ class Track:
 
 	#TODO: Write Track Constructors and Make Wrapper Changes
 
+#Class for Singer or Track Artist
 class Artist:
 	name = None
 	coverart_low = None
@@ -48,12 +51,14 @@ class Artist:
 	def __init__(self,name):
 		self.name = name
 
+	#Convinience Method for Setting Image Art Data
 	def setImageData(self,l,m,h,v):
 		self.coverart_low =l
 		self.coverart_med = m
 		self.coverart_high = h
 		self.coverart_vhigh = v
 
+#Function to Save some something from iternet to local storage
 def remotefilesaver(linklocation,filepath):
 	req =UrlRequest(linklocation)
 	req.wait()
@@ -64,26 +69,31 @@ def remotefilesaver(linklocation,filepath):
 #Easiest Interface to LastFM
 class LfmHelper():
 	lfmcachedir = None
+	#Cahce Version is used for Cahce consistency, version changes
 	cache_version = '1'
+
+	#Lfm Helper is initialized with the root folder
 	def __init__(self,root_folder):
 		self.lfmcachedir =  os.path.join(root_folder,'lfmcache')
 		if not os.path.exists(self.lfmcachedir):
 			os.makedirs(self.lfmcachedir)
 		self.__sanity_test()
 	
+	#This method is used to create a new version file for a New Cache
 	def __versioning(self):
 		versionfilepath = os.path.join(self.lfmcachedir,'version.txt')
 		versionfile = open(versionfilepath,'w')
 		versionfile.write(self.cache_version)
 		versionfile.close()
 
-
-	def clear_cache(self):	#Used to clear the cache
+	#This method is used to clear the complete cache
+	def clear_cache(self):	
 		shutil.rmtree(self.lfmcachedir)
 		if not os.path.exists(self.lfmcachedir):
 			os.makedirs(self.lfmcachedir)
 
-	def __sanity_test(self):		#Check if the old cache can be used
+	#Deletes old cache in case it cannot be used and does versioning
+	def __sanity_test(self):		
 		versionfilepath = os.path.join(self.lfmcachedir,'version.txt')
 		if os.path.exists(versionfilepath):
 			versionfile = open(versionfilepath,'r')
@@ -94,6 +104,7 @@ class LfmHelper():
 		if not os.path.exists(versionfilepath):
 			self.__versioning()
 
+	#Get the most played track around the world
 	def getTopTracks(self,callback):
 		infocache = os.path.join(self.lfmcachedir,'infocache')
 		needsupdate = True
@@ -109,6 +120,7 @@ class LfmHelper():
 		if needsupdate == True:
 			Thread(target=self.getTopTrackThreadFn,args=(callback,)).start()
 
+	#Actual Thread Function for Fetching the Top Tracks
 	def getTopTrackThreadFn(self,callback):
 		n =50
 		req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key='+API_key+'&format=json&limit='+str(n))
@@ -134,7 +146,7 @@ class LfmHelper():
 			curArtist = Artist(trackartist)
 			curArtist.setImageData(trackart_low,trackart_mid,trackart_high,trackart_vhigh)
 			self.updateArtist(curArtist) #Update the artist data
-			self.updateTrack(curTrack)
+			self.updateTrack(curTrack,actualfetch=false)
 			#Add the track to the return list
 			tracks.append(curTrack)
 		#Cache the top tracks here
@@ -145,6 +157,7 @@ class LfmHelper():
 		store['toptracks'] = {'lastupdated':curtime,'tracks':tracks}
 		callback(tracks)
 
+	#Used to Update the artist Data in Local Cache
 	def updateArtist(self,artist):		
 		artist_name = artist.name
 		self.updateArtistArt(artist)
@@ -156,6 +169,7 @@ class LfmHelper():
 		store['artist']={'artist':artist,'lastupdated':time.time()}
 		#TODO add more stuff as app gets developed
 
+	#Used to Update & Fetch Artist Art in Local Cache
 	def updateArtistArt(self,artist): #Currently this method only get the high quality stuff
 		imagelink = artist.coverart_vhigh
 		stripedname = "vh_"+imagelink[imagelink.rindex('/')+1:]
@@ -164,6 +178,7 @@ class LfmHelper():
 			Thread(target=remotefilesaver,args=(imagelink,imagepath)).start()
 		#TODO support lower quality art stuff later
 
+	#Returns the cover art given the artist name
 	def getArtistCoverPath(self,artist_name):
 		artist_file= os.path.join(self.lfmcachedir,artist_name,'infofile')
 		store = DictStore(artist_file)
@@ -176,16 +191,18 @@ class LfmHelper():
 			return check_path
 		return imagelink
 
-	def updateTrack(self,track):
+	#Updates Track Details in the Local Cache
+	def updateTrack(self,track,actualfetch):
 		trackartist = track.artist
 		trackname = track.name
 		artist_folder = os.path.join(self.lfmcachedir,trackartist)
 		track_file = os.path.join(artist_folder,trackname)
 		track_file = utils.pathfixer(track_file)
 		store = DictStore(track_file)
-		store['track'] = {'lastupdated':time.time(),'track':track,'actualtrackfetch':False}
+		store['track'] = {'lastupdated':time.time(),'track':track,'actualtrackfetch':actualfetch}
 		#TODO add more stuff as app gets developed
 
+	#Does an actual song info fetch from LastFm for a track
 	def getTrackDetails(self,artistname,trackname,callback):
 		needsupdate = True
 		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
@@ -201,6 +218,11 @@ class LfmHelper():
 		else:
 			Thread(target=self.getTopTrackDetailsThreadFn,args=(artistname,trackname,callback,)).start()
 
+	#Function to get Similar Tracks
+	def getSimilarTracks():
+		pass
+
+	#Thread Function for getting Actual Track Details
 	def getTopTrackDetailsThreadFn(self,artistname,trackname,callback):
 		req = UrlRequest('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+utils.urlfixer(artistname)+'&track='+utils.urlfixer(trackname)+'&format=json')
 		print ('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key='+API_key+'&artist='+utils.urlfixer(artistname)+'&track='+utils.urlfixer(trackname)+'&format=json')
@@ -237,6 +259,7 @@ class LfmHelper():
 		store['track'] = {'track':track, 'lastupdated':time.time(), 'actualtrackfetch':True}
 		callback(track)
 
+	#Gets the lyrics given trackname & artistname
 	def getTrackLyrics(self, artistname , trackname, callback):
 		cachefile = os.path.join(self.lfmcachedir,artistname,utils.pathfixer(trackname))
 		store = DictStore(cachefile)
@@ -245,7 +268,9 @@ class LfmHelper():
 		else:
 			Thread(target=self.getTrackLyricsThreadFn,args=(artistname,trackname,callback,)).start()
 
+	#Threaded Function for Lyrics Fetching
 	def getTrackLyricsThreadFn(self,artistname,trackname,callback):
+		#TODO: Add artistname & trackname corrections to make the fetch more robust
 		base_api_link = 'http://lyricscore.eu5.org/api/v1/?'
 		request_url = base_api_link +'artist='+utils.urlfixer(artistname)+'&title='+utils.urlfixer(trackname)+'&format=xml'
 		print (request_url)
@@ -260,10 +285,9 @@ class LfmHelper():
 		store['lyrics']= {'lyrics':result}
 		callback(result)
 
+	#Checks if Track Art image exists if not it is refetched
 	def updateTrackArt(self,track):
 		imagelink = track.coverart_vhigh
-		print 'Iniside update Track got the link'
-		print imagelink
 		if imagelink ==None:
 			return
 		strippedname = "vh_"+imagelink[imagelink.rindex('/')+1:]
@@ -271,6 +295,7 @@ class LfmHelper():
 		if not os.path.exists(imagepath):
 			Thread(target=remotefilesaver,args=(imagelink,imagepath)).start()
 
+	#Get the path for the Coverart Image 
 	def getTrackCoverPath(self,track):
 		cachefile = os.path.join(self.lfmcachedir,track.artist,utils.pathfixer(track.name))
 		store = DictStore(cachefile)
